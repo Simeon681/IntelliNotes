@@ -11,4 +11,5 @@
     <string name="login">Login</string>
     <string name="materials">Materials</string>
     <string name="search">Search</string>
+    <string name="go_to_register">Don\'t have an account yet?</string>
 </resources>

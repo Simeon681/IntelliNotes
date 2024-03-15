@@ -7,7 +7,8 @@ enum class Screen {
     MATERIAL,
     PLAN,
     SUMMARY,
-    QUESTIONS
+    QUESTIONS,
+    START
 }
 
 sealed class NavigationItem(val route: String) {
@@ -18,4 +19,5 @@ sealed class NavigationItem(val route: String) {
     object Plan : NavigationItem(Screen.PLAN.name)
     object Summary : NavigationItem(Screen.SUMMARY.name)
     object Questions : NavigationItem(Screen.QUESTIONS.name)
+    object Start : NavigationItem(Screen.START.name)
 }

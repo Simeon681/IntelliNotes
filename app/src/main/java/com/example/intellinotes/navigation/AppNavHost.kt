@@ -13,6 +13,7 @@ import com.example.intellinotes.screen.MaterialScreen
 import com.example.intellinotes.screen.PlanScreen
 import com.example.intellinotes.screen.QuestionsScreen
 import com.example.intellinotes.screen.RegisterScreen
+import com.example.intellinotes.screen.StartScreen
 import com.example.intellinotes.screen.SummaryScreen
 import com.example.intellinotes.view_model.LoginViewModel
 import com.example.intellinotes.view_model.MainViewModel
@@ -31,18 +32,23 @@ fun AppNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
+        composable(NavigationItem.Start.route) {
+            StartScreen(navController = navController)
+        }
         composable(NavigationItem.Login.route) {
             val loginViewModel = getViewModel<LoginViewModel>()
+            val state by loginViewModel.loginState.collectAsState()
             val email by loginViewModel.email.collectAsState()
             val password by loginViewModel.password.collectAsState()
             LoginScreen(
+                navController = navController,
                 email = email,
                 onEmailChange = { loginViewModel.setEmail(it) },
                 password = password,
                 onPasswordChange = { loginViewModel.setPassword(it) },
+                state = state,
                 onButtonClick = {
                     loginViewModel.login(email, password)
-                    navController.navigate(NavigationItem.Main.route)
                 },
                 onTextClick = {
                     navController.navigate("register")
@@ -115,7 +121,6 @@ fun AppNavHost(
                 material = material ?: error("Material not found")
             )
         }
-
         composable(NavigationItem.Questions.route) {
             val mainViewModel = getViewModel<MainViewModel>()
             val material by mainViewModel.material.collectAsState()

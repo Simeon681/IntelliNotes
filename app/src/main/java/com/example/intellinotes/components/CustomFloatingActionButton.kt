@@ -131,7 +131,7 @@ fun CustomFloatingActionButton(
 
 fun fileToMultipart(file: File): MultipartBody.Part {
     // Create RequestBody instance from file
-    val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+    val requestFile = file.asRequestBody("audio/mpeg".toMediaTypeOrNull())
 
     // Create MultipartBody.Part instance
     return MultipartBody.Part.createFormData("files", file.name, requestFile)
