@@ -73,7 +73,7 @@ fun LoginScreen(
 
             NormalClickableText(
                 initialText = stringResource(id = R.string.go_to_login),
-                mainText = stringResource(id = R.string.login),
+                mainText = stringResource(id = R.string.register),
                 onTextSelected = onTextClick
             )
         }

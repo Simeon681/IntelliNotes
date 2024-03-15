@@ -9,7 +9,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.intellinotes.screen.LoginScreen
 import com.example.intellinotes.screen.MainScreen
+import com.example.intellinotes.screen.MaterialScreen
+import com.example.intellinotes.screen.PlanScreen
+import com.example.intellinotes.screen.QuestionsScreen
 import com.example.intellinotes.screen.RegisterScreen
+import com.example.intellinotes.screen.SummaryScreen
 import com.example.intellinotes.view_model.LoginViewModel
 import com.example.intellinotes.view_model.MainViewModel
 import com.example.intellinotes.view_model.RegisterViewModel
@@ -19,7 +23,8 @@ import org.koin.androidx.compose.getViewModel
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = NavigationItem.Main.route
+    onTextSelect: () -> Unit,
+    startDestination: String = NavigationItem.Login.route
 ) {
     NavHost(
         modifier = modifier,
@@ -68,9 +73,54 @@ fun AppNavHost(
         composable(NavigationItem.Main.route) {
             val mainViewModel = getViewModel<MainViewModel>()
             val expanded by mainViewModel.expanded.collectAsState()
+            val materials by mainViewModel.materials.collectAsState()
+
             MainScreen(
+                navController,
                 expanded = expanded,
-                onExpandedChange = { mainViewModel.setExpanded(it) }
+                onExpandedChange = { mainViewModel.setExpanded(it) },
+                onTextSelect = onTextSelect,
+                materials = materials,
+                onMusicSelect = {
+                    mainViewModel.sendVoice(it)
+                },
+                onDocSelect = {
+                    mainViewModel.sendText(it)
+                }
+            )
+        }
+        composable("${NavigationItem.Material.route}/{id}") {
+            val id = it.arguments?.getString("id")
+            val mainViewModel = getViewModel<MainViewModel>()
+            val material by mainViewModel.material.collectAsState()
+            MaterialScreen(
+                onGetMaterial = { mainViewModel.getMaterial(id.toString()) },
+                material = material ?: error("Material not found"),
+                onClick1 = { navController.navigate(NavigationItem.Plan.route) },
+                onClick2 = { navController.navigate(NavigationItem.Summary.route) },
+                onClick3 = { navController.navigate(NavigationItem.Questions.route) }
+            )
+        }
+        composable(NavigationItem.Plan.route) {
+            val mainViewModel = getViewModel<MainViewModel>()
+            val material by mainViewModel.material.collectAsState()
+            PlanScreen(
+                material = material ?: error("Material not found")
+            )
+        }
+        composable(NavigationItem.Summary.route) {
+            val mainViewModel = getViewModel<MainViewModel>()
+            val material by mainViewModel.material.collectAsState()
+            SummaryScreen(
+                material = material ?: error("Material not found")
+            )
+        }
+
+        composable(NavigationItem.Questions.route) {
+            val mainViewModel = getViewModel<MainViewModel>()
+            val material by mainViewModel.material.collectAsState()
+            QuestionsScreen(
+                material = material ?: error("Material not found")
             )
         }
     }

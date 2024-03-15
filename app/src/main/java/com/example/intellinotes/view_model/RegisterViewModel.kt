@@ -36,9 +36,9 @@ class RegisterViewModel(
                     username,
                     email,
                     password
-
                 )
             )
+
             if (response.isSuccessful) {
                 _registerState.value = RegisterState.Success
             } else {

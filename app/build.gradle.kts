@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -73,4 +74,5 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.exoplayer)
 }

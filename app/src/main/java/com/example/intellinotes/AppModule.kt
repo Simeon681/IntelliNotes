@@ -1,9 +1,12 @@
 package com.example.intellinotes
 
-import com.example.intellinotes.RetrofitHost.EMULATOR
+import com.example.intellinotes.RetrofitHost.SERVER
 import com.example.intellinotes.repository.AuthRepository
+import com.example.intellinotes.repository.MaterialRepository
 import com.example.intellinotes.service.AuthService
+import com.example.intellinotes.service.MaterialService
 import com.example.intellinotes.service.service_impl.AuthServiceImpl
+import com.example.intellinotes.service.service_impl.MaterialServiceImpl
 import com.example.intellinotes.view_model.LoginViewModel
 import com.example.intellinotes.view_model.MainViewModel
 import com.example.intellinotes.view_model.RegisterViewModel
@@ -44,7 +47,7 @@ val appModule = module {
 
         Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(EMULATOR)
+            .baseUrl(SERVER)
             .addConverterFactory(GsonConverterFactory.create(get()))
             .build()
     }
@@ -53,11 +56,16 @@ val appModule = module {
         get<Retrofit>().create(AuthRepository::class.java)
     }
 
+    single<MaterialRepository> {
+        get<Retrofit>().create(MaterialRepository::class.java)
+    }
+
     single<AuthService> { AuthServiceImpl(get(), get()) }
+    single<MaterialService> { MaterialServiceImpl(get()) }
 
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
-    viewModel { MainViewModel() }
+    viewModel { MainViewModel(get()) }
 
     factory { MainApplication() }
 }

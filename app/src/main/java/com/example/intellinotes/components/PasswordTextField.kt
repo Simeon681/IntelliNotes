@@ -1,6 +1,7 @@
 package com.example.intellinotes.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import com.example.intellinotes.R
 
 @Composable
@@ -38,7 +40,7 @@ fun PasswordTextField(
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(componentShapes.small),
+            .clip(RoundedCornerShape(4.dp)),
         label = { Text(text = labelValue) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,

@@ -17,18 +17,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.intellinotes.components.CustomFloatingActionButton
 import com.example.intellinotes.components.MaterialCard
+import com.example.intellinotes.dto.response.MaterialResponse
+import okhttp3.MultipartBody
 
 @Composable
 fun MainScreen(
+    navController: NavHostController,
     expanded: Boolean,
-    onExpandedChange: (Boolean) -> Unit
+    onExpandedChange: (Boolean) -> Unit,
+    materials: List<MaterialResponse>,
+    onTextSelect: () -> Unit,
+    onMusicSelect: (MultipartBody.Part) -> Unit,
+    onDocSelect: (MultipartBody.Part) -> Unit
 ) {
-
     Surface(
         modifier = Modifier
             .fillMaxSize(),
@@ -38,7 +44,9 @@ fun MainScreen(
             floatingActionButton = {
                 CustomFloatingActionButton(
                     expanded = expanded,
-                    onExpandedChange = onExpandedChange
+                    onExpandedChange = onExpandedChange,
+                    onMusicSelect = onMusicSelect,
+                    onDocSelect = onDocSelect
                 )
             }
         ) { innerPadding ->
@@ -73,20 +81,20 @@ fun MainScreen(
 //                        onSearchButtonClick = {}
 //                    )
 
-                    MaterialCard()
+                    materials.forEach {
+                        MaterialCard(
+                            navController = navController,
+                            title = it.title,
+                            text = it.text,
+                            createdAt = it.createdAt,
+                            tags = it.tags,
+                            id = it.id,
+                        )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                 }
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun MainScreenPreview() {
-    MainScreen(
-        expanded = false,
-        onExpandedChange = {}
-    )
 }

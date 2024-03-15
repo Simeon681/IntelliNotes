@@ -16,9 +16,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,34 +24,25 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
 fun MaterialCard(
-
+    navController: NavHostController,
+    title: String,
+    text: String,
+    createdAt: String,
+    tags: List<String>,
+    id: String,
 ) {
-    val tags by remember{
-        mutableStateOf(listOf("Author", "math", "history"))
-    }
-
-    val colors = listOf(
-        Color(0xFFE57373),
-        Color(0xFF81C784),
-        Color(0xFF64B5F6),
-        Color(0xFF9575CD),
-        Color(0xFF4DB6AC),
-        Color(0xFF7986CB),
-        Color(0xFFA1887F),
-        Color(0xFF90A4AE)
-    )
 
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                //TODO
+                navController.navigate("material/$id")
             },
         colors = CardDefaults.elevatedCardColors(
             Color.White
@@ -71,7 +59,7 @@ fun MaterialCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Heading Text",
+                    text = title,
                     modifier = Modifier
                         .heightIn()
                         .weight(1f, true),
@@ -84,7 +72,7 @@ fun MaterialCard(
                 )
 
                 Text(
-                    text = getTimeAgo(1710421135000),
+                    text = createdAt,
                     modifier = Modifier
                         .heightIn(),
                     style = TextStyle(
@@ -98,7 +86,7 @@ fun MaterialCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Description",
+                text = text,
                 maxLines = 5,
                 overflow = TextOverflow.Ellipsis
             )
@@ -121,7 +109,7 @@ fun MaterialCard(
                                 fontSize = 12.sp,
                                 fontStyle = FontStyle.Normal
                             ),
-                            color = Color.LightGray
+                            color = Color.White
                         )
                     }
 
@@ -151,10 +139,4 @@ fun getTimeAgo(timestamp: Long): String {
         minutes > 0 -> "$minutes minute${if (minutes > 1) "s" else ""} ago"
         else -> "$seconds second${if (seconds > 1) "s" else ""} ago"
     }
-}
-
-@Preview
-@Composable
-fun MaterialCardPreview() {
-    MaterialCard()
 }
