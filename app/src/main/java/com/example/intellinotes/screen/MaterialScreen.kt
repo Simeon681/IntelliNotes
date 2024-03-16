@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.intellinotes.components.ExoVideoPlayer
@@ -139,7 +140,7 @@ fun MaterialScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    ExoVideoPlayer(material.audioUrl.toString())
+                    //ExoVideoPlayer(material.audioUrl.toString())
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -182,4 +183,52 @@ fun MaterialScreen(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun MaterialScreenPreview() {
+    MaterialScreen(
+        onGetMaterial = {},
+        material =
+        MaterialResponse(
+            id = "1",
+            title = "History of Rome",
+            description = "History of Rome",
+            createdAt = "1710557910000",
+            audioUrl = "https://nestjsimageupload.blob.core.windows.net/audio/6d760b2b-f57c-455a-87cd-dbf7ce517a07.mp3",
+            text = "There is archaeological evidence of human occupation of the Rome area from at least 5,000 years, but the dense layer of much younger debris obscures Palaeolithic and Neolithic sites.[4] The evidence suggesting the city's ancient foundation is also obscured by the legend of Rome's beginning involving Romulus and Remus.\n" +
+                    "\n" +
+                    "The traditional date for the founding of Rome is 21 April 753 BC, following M. Terentius Varro,[5] and the city and surrounding region of Latium has continued to be inhabited with little interruption since around that time. Excavations made in 2014 have revealed a wall built long before the city's official founding year. Archaeologists uncovered a stone wall and pieces of pottery dating to the 9th century BC and the beginning of the 8th century BC, and there is evidence of people arriving on the Palatine hill as early as the 10th century BC.[6][7]",
+            summary = "There is archaeological evidence of human occupation of the Rome area from at least 5,000 years, but the dense layer of much younger debris obscures Palaeolithic and Neolithic sites.[4] The evidence suggesting the city's ancient foundation is also obscured by the legend of Rome's beginning involving Romulus and Remus.\n" +
+                    "\n" +
+                    "The traditional date for the founding of Rome is 21 April 753 BC, following M. Terentius Varro,[5] and the city and surrounding region of Latium has continued to be inhabited with little interruption since around that time. Excavations made in 2014 have revealed a wall built long before the city's official founding year. Archaeologists uncovered a stone wall and pieces of pottery dating to the 9th century BC and the beginning of the 8th century BC, and there is evidence of people arriving on the Palatine hill as early as the 10th century BC.[6][7]",
+            plan = "1. Introduction:\n" +
+                    "\n" +
+                    "- Brief overview of archaeological evidence of human occupation in Rome.\n" +
+                    "- Mention the obscured Palaeolithic and Neolithic sites due to younger debris and the legend of Romulus and Remus.\n" +
+                    "2. Early Human Occupation:\n" +
+                    "\n" +
+                    "- Discuss archaeological evidence suggesting human occupation of the Rome area dating back at least 5,000 years.\n" +
+                    "- Mention the challenge of obscured Palaeolithic and Neolithic sites.\n" +
+                    "3. Founding of Rome:\n" +
+                    "\n" +
+                    "- Introduce the traditional date for the founding of Rome as 21 April 753 BC, following M. Terentius Varro.\n" +
+                    "- Discuss the legend of Romulus and Remus as the city's beginning, which obscures evidence of its ancient foundation.\n" +
+                    "4. Recent Archaeological Discoveries:\n" +
+                    "\n" +
+                    "- Describe recent excavations made in 2014.\n" +
+                    "- Mention the uncovering of a stone wall and pottery dating to the 9th and 8th centuries BC.\n" +
+                    "- Discuss evidence of people arriving on the Palatine hill as early as the 10th century BC.\n" +
+                    "5. Conclusion:\n" +
+                    "\n" +
+                    "- Summarize the significance of archaeological evidence in understanding the history of Rome.\n" +
+                    "- Highlight the ongoing efforts in archaeological research to uncover more about the city's ancient past.",
+            tags = listOf("History", "Rome", "Ancient"),
+            questions = listOf()
+        ),
+        onClick1 = {},
+        onClick2 = {},
+        onClick3 = {}
+    )
 }

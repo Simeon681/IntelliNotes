@@ -72,7 +72,7 @@ fun MaterialCard(
                 )
 
                 Text(
-                    text = createdAt,
+                    text = getTimeAgo(createdAt.toLong()),
                     modifier = Modifier
                         .heightIn(),
                     style = TextStyle(
@@ -122,7 +122,7 @@ fun MaterialCard(
 
 fun getTimeAgo(timestamp: Long): String {
     val currentTime = System.currentTimeMillis()
-    val seconds = currentTime - timestamp
+    val seconds = (currentTime - timestamp) / 1000
     val minutes = seconds / 60
     val hours = minutes / 60
     val days = hours / 24

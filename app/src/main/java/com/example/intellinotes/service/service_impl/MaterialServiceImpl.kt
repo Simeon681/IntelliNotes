@@ -25,4 +25,8 @@ class MaterialServiceImpl(
     override suspend fun sendText(file: MultipartBody.Part): Response<List<MaterialResponse>> {
         return materialRepository.sendText(file)
     }
+
+    override suspend fun sendMock(): Response<List<MaterialResponse>> {
+        return materialRepository.sendVoiceMock()
+    }
 }

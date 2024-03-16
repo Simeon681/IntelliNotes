@@ -1,6 +1,7 @@
 package com.example.intellinotes.components
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -31,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -43,6 +45,7 @@ fun CustomFloatingActionButton(
     onExpandedChange: (Boolean) -> Unit,
     onMusicSelect: (MultipartBody.Part) -> Unit,
     onDocSelect: (MultipartBody.Part) -> Unit,
+    onMockSelect: () -> Unit
 ) {
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     val getContent = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { result: Uri? ->
@@ -67,47 +70,58 @@ fun CustomFloatingActionButton(
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
                 item {
-                    FloatingActionButton(
-                        onClick = {
-                            getContent.launch("audio/mp3")
-                        },
-                        shape = CircleShape,
-                        containerColor = Color.LightGray,
-                        contentColor = Color.Cyan
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AudioFile,
-                            contentDescription = null
-                        )
-                    }
-                    selectedImageUri?.let {
-                        val file = File(it.path.toString())
-                        val multipart = fileToMultipart(file)
-                        onMusicSelect(multipart)
+                    Column {
+                        FloatingActionButton(
+                            onClick = {
+                                getContent.launch("audio/mp3")
+                            },
+                            shape = CircleShape,
+                            containerColor = Color.LightGray,
+                            contentColor = Color.Cyan
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.AudioFile,
+                                contentDescription = null
+                            )
+                        }
+                        selectedImageUri?.let {
+                            val file = File(it.path.toString())
+                            val multipart = fileToMultipart(file)
+                            Toast.makeText(
+                                LocalContext.current,
+                                "Music selected $file",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            //onMusicSelect(multipart)
+                            onMockSelect()
+                        }
                     }
 
                     Spacer(modifier = Modifier.padding(4.dp))
 
-                    FloatingActionButton(
-                        onClick = {
-                            getContent.launch("document/*")
-                        },
-                        shape = CircleShape,
-                        containerColor = Color.LightGray,
-                        contentColor = Color.Cyan
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.TextSnippet,
-                            contentDescription = null
-                        )
-                    }
-                    selectedImageUri?.let {
-                        val file = File(it.path.toString())
-                        val multipart = fileToMultipart(file)
-                        onDocSelect(multipart)
-                    }
+                    Column {
+                        FloatingActionButton(
+                            onClick = {
+                                getContent.launch("document/pdf")
+                            },
+                            shape = CircleShape,
+                            containerColor = Color.LightGray,
+                            contentColor = Color.Cyan
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.TextSnippet,
+                                contentDescription = null
+                            )
+                        }
+                        selectedImageUri?.let {
+                            val file = File(it.path.toString())
+                            val multipart = fileToMultipart(file)
+                            //onDocSelect(multipart)
+                            onMockSelect()
+                        }
 
-                    Spacer(modifier = Modifier.padding(8.dp))
+                        Spacer(modifier = Modifier.padding(8.dp))
+                    }
                 }
             }
         }

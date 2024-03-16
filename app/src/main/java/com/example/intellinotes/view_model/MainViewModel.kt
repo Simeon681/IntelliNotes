@@ -78,6 +78,20 @@ class MainViewModel(
         }
     }
 
+    fun sendMock() {
+        viewModelScope.launch {
+            _state.value = MainState.Loading
+            val response = materialService.sendMock()
+            if (response.isSuccessful) {
+                _materials.value = response.body()!!
+                _state.value = MainState.Success
+            } else {
+                _state.value = MainState.Error(response.message())
+                _materials.value = emptyList()
+            }
+        }
+    }
+
     fun sendText(
         file: MultipartBody.Part
     ) {

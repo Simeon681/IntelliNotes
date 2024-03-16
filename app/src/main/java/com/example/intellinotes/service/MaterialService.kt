@@ -9,4 +9,6 @@ interface MaterialService {
     suspend fun getMaterial(id: String): Response<MaterialResponse>
     suspend fun sendVoice(file: MultipartBody.Part): Response<List<MaterialResponse>>
     suspend fun sendText(file: MultipartBody.Part): Response<List<MaterialResponse>>
+
+    suspend fun sendMock(): Response<List<MaterialResponse>>
 }
